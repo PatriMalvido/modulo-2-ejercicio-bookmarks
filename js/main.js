@@ -1,95 +1,93 @@
-"use strict"
+'use strict';
+//-----------------MOSTRAR Y OCULTAR EL BOTON HAMBURGUESA------------------//
 
-/* Dia 1*/
-
-/* 1- Prueba mostrar formulario nuevo bookmark */
-const section = document.querySelector(".js-data-actions");
-section.classList.remove("hidden");
-
-/* 2- Prueba mostrar menu */
-const sectionMenu = document.querySelector(".js-menudropdown");
-sectionMenu.classList.remove("collapsed");
-
-/* 3- Añadir informacion de los enlaces desde JS
-    3.1 Traer el elemento html
-    3.2 Variable que contenga toda la información del li por cada uno de los enlaces
-    3.3 Añadir esa info con el innerHTML por cada uno de los enlaces
-*/
-const listLinks = document.querySelector(".js_datalist");
+// 1- traer los elementos que necesito de HTML
+const menuDropDown = document.querySelector('.js-menudropdown');//form class= "menudropdown"
+const linkDropDown = document.querySelector('.js-linkdropdown');//a class= "header__menulink"
 
 
-/*Dia 2*/
+// 3- Crear las funciones que necesito para mostrar u ocultar el menu
+function showDropDown() {
+  menuDropDown.classList.remove('collapsed');//funcion para mostrar el menu
+}
+function hideDropDown(){
+  menuDropDown.classList.add('collapsed');//funcion para ocultar el menu
+}
+function toggleDropDown(){ //mostrar u ocultar dependiendo de su estado actual
+  if (menuDropDown.classList.contains('collapsed')){
+    showDropDown();
+  }
+  else {
+    hideDropDown();
+  }
+}
 
-const bkm_1_url ="https://books.adalab.es/materiales-del-curso-n/-MdR6Gp68BX20m1pi0z2/modulo-2-programando-la-web/javascript/2_1_intro_a_la_programacion";
-const bkm_1_desc= "JS en los materiales de Adalab";
-const bkm_1_seen = "checked";
-const bkm_1_tags_1 = "javascript";
-const bkm_1_tags_2 = "html";
+// 4 - Crear la funcion manejadora del evento
 
-
-let html = `<li class="data__listitem"> 
-<article class="data__item">
-  <p class="item__url">
-    <a href=${bkm_1_url} target="_blank" rel="noopener noreferrer">
-      books.adalab.es/materiales-del-curso-n/-MdR6Gp68BX20m1pi0z2/modulo-2-programando-la-web/javascript/2_1_intro_a_la_programacion
-    </a>
-  </p>
-  <p class="item__seen">
-    <input type="checkbox" ${bkm_1_seen}checked name="item_imp_2" id="item_imp_2">
-  </p>
-  <p class="item__desc">${bkm_1_desc}</p>
-  <ul class="item__tags">
-    <li class="item__tag">${bkm_1_tags_1.toLowerCase()}</li><li class="item__tag">${bkm_1_tags_2.toLowerCase()}</li>
-  </ul>
-</article>
-</li>`;
-
-const bkm_2_url = "https://thesmartcoder.dev/9-awesome-projects-you-can-build-with-vanilla-javascript/";
-const bkm_2_desc= "Ideas de proyecto JS";
-const bkm_2_tags_1 = "javascript";
-const bkm_2_tags_2 = "portfolio";
+function handleClickLinkDropDown(event) {
+  event.preventDefault();
+  toggleDropDown();
+}
 
 
-html += ` <li class="data__listitem">
-<article class="data__item">
-  <p class="item__url">
-    <a href=${bkm_2_url}target="_blank">thesmartcoder.dev/9-awesome-projects-you-can-build-with-vanilla-javascript/</a></a></p>
-  <p class="item__seen">
-    <input type="checkbox" ${bkm_2_seen}checked name="item_imp_1" id="item_imp_1">
-  </p>
-  <p class="item__desc">${bkm_2_desc}</p>
-  <ul class="item__tags">
-    <li class="item__tag">${bkm_2_tags_1.toLowerCase()}</li><li class="item__tag">${bkm_2_tags_2.toLowerCase()}</li>
-  </ul>
-</article>
-</li>`;
+// 2- Evento que quiero hacer ( que al pulsar el boton de hamburguesa se muestre el menu) 
+linkDropDown.addEventListener('click',handleClickLinkDropDown);
 
-const bkm_3_url = "https://books.adalab.es/materiales-del-curso-n/-MdR6Gp68BX20m1pi0z2/modulo-1-html-y-css/1_1_intro_a_la_web";
-const bkm_3_desc= "HTML en los materiales de Adalab";
-const bkm_2_seen = "checked";
-const bkm_3_seen = "";
-const bkm_3_tags_1 = "html";
-const bkm_3_tags_2 = "css";
+//--------------------------------------------------------------------------//
 
-html += `   <li class="data__listitem">
-<article class="data__item">
-  <p class="item__url">
-    <a
-      href=${bmk_3_url}
-      target="_blank"
-      rel="noopener noreferrer"
-      >${bmk_3_url.slice(8)}</a
-    >
-  </p>
-  <p class="item__seen">
-    <input type="checkbox" ${bmk_3_seen} name="item_imp_2" id="item_imp_2" />
-  </p>
-  <p class="item__desc">${bmk_3_desc}</p>
-  <ul class="item__tags">
-    <li class="item__tag">${bmk_3_tags_1.toLowerCase()}</li>
-    <li class="item__tag">${bmk_3_tags_2.toLowerCase()}</li>
-  </ul>
-</article>
-</li>`;
+//----------------BOTON DE VISTA TARJETA Y VISTA TABLA----------------------//
 
-listLinks.innerHTML=html;
+// 1- traer los elementos que necesito de HTML
+const buttonShowCardView = document.querySelector('.js-cardviewbutton');
+const buttonShowTable = document.querySelector ('.js-tablebutton');
+const boardData = document.querySelector ('.js-boardata');
+
+// 3- Crear las funciones que necesito para mostrar la vista tarjeta o vista tabla
+function setCardListView(){ //cambia el modo de vista de tabla a tarjeta
+  boardData.classList.remove('tableview');
+  boardData.classList.add('listview');
+}
+function setTableView(){ //cambia el modo de vista de tarjeta a tabla
+  boardData.classList.remove('listview');
+  boardData.classList.add('tableview');
+}
+
+// 4 - Crear las funciones manejadoras del evento vista tarjeta y vista tabla
+function handleClickShowCardView (event){
+  event.preventDefault();
+  
+  setCardListView();
+  buttonShowTable.classList.remove('selected'); //resaltar el boton
+  buttonShowCardView.classList.add('selected');
+}
+
+function handleClickShowTable (event) {
+  event.preventDefault();
+
+  setTableView();
+  buttonShowCardView.classList.remove('selected');//resaltar el boton
+  buttonShowTable.classList.add('selected');
+}
+
+
+// 2- Evento que quiero hacer ( que al pulsar el boton de Vista Tarjetas se muestre de esa forma, lo mismo para el boton de Vista Tabla) 
+buttonShowCardView.addEventListener('click', handleClickShowCardView);
+buttonShowTable.addEventListener ('click', handleClickShowTable);
+
+//---------------------------------------------------------------------------//
+
+//------------------BOTON AÑADIR NUEVA ENTRADA-----------------------------//
+
+// 1- traer los elementos que necesito de HTML
+const buttonAdd = document.querySelector('.js-buttonadd');
+const sectionAdd = document.querySelector('.js-sectionadd');
+
+
+// 3- Crear las funciones que necesito para añadir una nueva entrada de datos
+function showAddForm() {
+  sectionAdd.classList.remove('hidden');
+}
+
+
+// 2- Evento que quiero hacer ( que al pulsar el boton de Nuevo me aparezca el formulario)
+buttonAdd.addEventListener('click', showAddForm);
